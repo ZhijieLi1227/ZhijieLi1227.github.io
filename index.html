@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>给小赵的礼物</title>
+    <title>给宝的生日礼物</title>
     <style>
         body{
-            background-color: rgb(35,35,35);
+            background-color: rgb(202, 210, 227);
+            display: flex;
+            justify-content: center;
         }
         span{
             /* 让弹出来的文字不被选中，影响操作体验 */
@@ -17,10 +20,131 @@
             position: absolute;
             transition: 1s;
         }
+        .a{
+            position: relative;
+            width: 700px;
+            height: 400px;
+            border: #fff 10px solid;
+            background-color: rgb(120,140,200);
+            top: 120px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .b{
+            position: absolute;
+            width: 200px;
+            height: 300px;
+            left: 0;
+            margin: 75px 50px;
+            transition: 1s;
+        }
+        .b a{
+            text-decoration: none;
+            color: #fff;
+            font: 900 28px '';
+        }
+        .b h2{
+            /* 鼠标放开时的动画，第一个值是动画的过渡时间
+            第二个值是延迟一秒后执行动画 */
+            transition: .5s 1s;
+            opacity: 0;
+            color: rgb(30,210,200);
+        }
+        .b span{
+            transition: .5s 1s;
+            color: #fff;
+            font: 500 15px '';
+            position: absolute;
+            top: 70px;
+        }
+        .c{
+            position: absolute;
+            top: -130px;
+            right: -240px;
+        }
+        .d,.e{
+            position: absolute;
+            right: calc(var(--i)*100px);
+            width: calc(var(--w)*40px);
+            height: 500px;
+            overflow: hidden;
+            border-radius: 100px;
+            transform: rotateZ(220deg) translate(0,0);
+            background: rgb(240,220,150);
+            transition: .5s .5s;
+        }
+        .d:nth-child(2){
+            background: rgb(240,190,230);
+        }
+        .e{
+            left: -470px;
+            top: -140px;
+            width: 70px;
+            background-color: rgb(90,220,150);
+        }
+        .a:hover .c div{
+            /* 设置延迟动画 */
+            transition: .5s calc(var(--i)*.1s);
+            /* 移动的轨迹 */
+            transform: rotateZ(220deg) translate(-200px,400px);
+        }
+        .a:hover .b{
+            transition: 1s .5s;
+            left: 370px;
+        }
+        .a:hover .b span{
+            transition: 1s .5s;
+            top: 105px;
+        }
+        .a:hover .b h2{
+            transition: 1s .5s;
+            opacity: 1;
+        }
+        .f{
+            width: 250px;
+            height: 250px;
+            position: absolute;
+            background-image: url("goat.png");
+            background-size: cover;
+            margin: 70px;
+            opacity: 0;
+            transition: .5s;
+        }
+        .a:hover .f{
+            transition: 1s 1.3s;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
-    <script>
+    <!-- 名片分三大块
+    最外层的一块a
+    文字一大块b
+    平面圆柱一块c -->
+    <div class="a">
+        <div class="b">
+            <a href="#">生日快乐！</a>
+            <h2>点击图片有惊喜哦</h2>
+            <span>来日方长，细水长流,</br>你要的爱和感动我慢慢给<br/>往后余生，我会陪你度过<br/>愿我的宝贝生日快乐!!</span>
+        </div>
+        <div class="c">
+            <!-- --i是用来计算平面圆柱的动效延迟和距离的
+            --w则是用来计算平面圆柱的宽度 -->
+            <div class="d" style="--i:1;--w:1.5"></div>
+            <div class="d" style="--i:2;--w:1.6"></div>
+            <div class="d" style="--i:3;--w:1.4"></div>
+            <div class="d" style="--i:4;--w:1.7"></div>
+            <div class="e" style="--i:1"></div>
+        </div>
+        <!-- 设置二维码 -->
+        <div class="f">
+            <audio id="music" src="生日歌.mp3" loop autoplay></audio>
+            <figure>
+                <img src="举蛋糕.jpeg" width="240" height="240" onClick="play();" alt="宋亚轩">
+            </figure>
+        </div>
+    </div>
+<script>
         // 设置随机出现的文字数组
         var arr = ["一岁一礼，一寸欢喜","无事绊心弦，所念皆如愿",
                     "处处美景，岁岁良辰","今夜星光为贺，明朝暖日相伴",
@@ -54,6 +178,23 @@
             // 将span添加到body里
             document.body.appendChild(span)
         }
-    </script>
+        window.onload = function(){
+            var audio = document.getElementById('music');
+                audio.pause();//打开页面时无音乐
+        }
+        function play() {
+            var audio = document.getElementById('music');
+            audio.loop = false
+            if (audio.paused) {
+                audio.play();
+                document.getElementById('musicImg').src="images/play.png";
+            }
+            else{
+                audio.pause();
+                audio.currentTime = 0;//音乐从头播放
+                document.getElementById('musicImg').src="images/stop.png";
+            }
+        }
+</script>
 </body>
 </html>
